@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, Link} from "react-router-dom";
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Welcome from "./components/welcome.js"
@@ -21,40 +22,21 @@ function App() {
 
   return (
     <div className="App">
-        <nav className="navbar navbar-expand navbar-light bg-light">
-        <a href="/" className="navbar-brand">
-          Mapmory
-        </a>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/photomap"} className="nav-link">
-              Photo Map
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/photolist"} className="nav-link">
-              Photo List
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/search"} className="nav-link">
-              Search
-            </Link>
-          </li>
-          <li className="nav-item" >
-            { user ? (
-              <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
-                Logout {user.name}
-              </a>
-            ) : (            
-            <Link to={"/login"} className="nav-link">
-              Login
-            </Link>
-            )}
-
-          </li>
-        </div>
-      </nav>
+      <Navbar bg="light" variant="light">
+        <Navbar.Brand href="/">
+          <img src="mapmoryicon.png" width="200"></img>
+        </Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/photomap">Photo Map</Nav.Link>
+          <Nav.Link href="/photolist">Photo List</Nav.Link>
+          <Nav.Link href="/search">Search</Nav.Link>
+          { user ? (
+            <Nav.Link onClick={logout}>Logout {user.name}</Nav.Link>
+          ):(
+            <Nav.Link href="/login">Login</Nav.Link>
+          )}
+        </Nav>
+      </Navbar>
 
       <div className="container mt-3">
         <Routes>
