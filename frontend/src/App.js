@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Link} from "react-router-dom";
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'holderjs';
 
 import Welcome from "./components/welcome.js"
 import PhotoMap from "./components/photo-map.js"
@@ -38,7 +39,7 @@ function App() {
         </Nav>
       </Navbar>
 
-      <div className="container mt-3">
+      <div className="m-5">
         <Routes>
           <Route path="/" element={<Welcome/>} />
           <Route path="/photomap" element={<PhotoMap props/>} />
