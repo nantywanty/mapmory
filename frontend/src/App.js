@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <Navbar bg="light" variant="light">
         <Navbar.Brand href="/">
-          <img src="mapmoryicon.png" width="200"></img>
+          <img src="mapmorylogo.png" width="200"></img>
         </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/photomap">Photo Map</Nav.Link>
