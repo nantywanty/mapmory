@@ -4,7 +4,6 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'holderjs';
 
-
 import Welcome from "./components/welcome.js";
 import PhotoMap from "./components/photo-map.js";
 import PhotoList from "./components/photo-list.js";
@@ -14,6 +13,12 @@ import Login from "./components/login.js";
 function App() {
   const [user, setUser] = React.useState(null);
 
+  React.useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('mapmoryUser'));
+    if (loggedInUser) {
+      setUser(loggedInUser);
+    }
+  }, []);
 
   return (
     <div className="App">

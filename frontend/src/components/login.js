@@ -4,15 +4,17 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import * as Icon from 'react-bootstrap-icons';
 
 function Login(props) {
-
+    
     const logout = () => {
         console.log("Logged out");
         props.setUser(null);
+        localStorage.setItem('mapmoryUser', null)
     }
     const success = (response) => {
         console.log("Login success");
         console.log(response);
         props.setUser(response);
+        localStorage.setItem('mapmoryUser', JSON.stringify(response))
     }
     const fail = () => {
         console.log("Login failed");
@@ -25,7 +27,7 @@ function Login(props) {
                     <NavDropdown title={
                         <img src={props.user.profileObj.imageUrl} className="rounded-circle" height={40}/>      
                     } 
-                    align="end" color="red">
+                    align="end">
                         <NavDropdown.Item>Signed in as {props.user.profileObj.name}</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>
@@ -40,7 +42,7 @@ function Login(props) {
                     <NavDropdown title={
                         <Icon.PersonCircle size={40} color="grey"/>
                     } 
-                    align="end" color="red">
+                    align="end">
                         <NavDropdown.Item>Guest</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item>
@@ -49,7 +51,6 @@ function Login(props) {
                                 buttonText="Sign in with Google"
                                 onSuccess={success}
                                 onFailure={fail}
-                                // cookiePolicy={'single_host_origin'}
                             />
                         </NavDropdown.Item>
                     </NavDropdown>
