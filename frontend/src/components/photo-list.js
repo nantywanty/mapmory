@@ -305,7 +305,7 @@ function PhotoList() {
                                 {selectedPhotos.map((photo) => (
                                     <Col>
                                     <Card>
-                                        <Card.Img variant="top" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/>
+                                        <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/>
                                         <Card.Body>
                                         <Card.Subtitle>Image Name</Card.Subtitle>
                                         <Card.Text>
