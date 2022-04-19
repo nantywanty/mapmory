@@ -83,6 +83,7 @@ class App extends React.Component {
             } />
             <Route path="/photolist" element={
               <PhotoList 
+                user={this.state.user}
                 photoBank = {this.state.photoBank} 
                 photoMap = {this.state.photoMap}
                 setPhotoBank = {this.setPhotoBank}
