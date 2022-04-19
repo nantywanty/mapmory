@@ -15,19 +15,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      photoBank: [
-        "15DOevtvEwRVgbZ2bULB30dFDdXdYG7Q2",
-        "1JuqFdLbeL9BUT5Ky8hlYbERoZQJU649f",
-        "1doZdC_qbLTe-lVyZyOdXWhOtOQiD2o4_",
-        "1UUyVPm70qZL7K49fTW7K0OfYZ1yviyjf",
-        "1NA5U5wPQmA7AyJq3mPsEcsMiG9n-ZlGM",
-        "1NSeUN1F-TxhTYIS4vyfJrJG11dYL3IUH",
-      ],
-      photoMap: []
+      photos: [],
     }
     this.setUser = this.setUser.bind(this);
-    this.setPhotoBank = this.setPhotoBank.bind(this);
-    this.setPhotoMap = this.setPhotoMap.bind(this);
+    this.setPhotos = this.setPhotos.bind(this);
   }
 
   //State Related Functions
@@ -36,12 +27,8 @@ class App extends React.Component {
     this.setState({ user: loggedInUser})
   }
 
-  setPhotoBank(photos) {
-    this.setState({ photoBank: photos})
-  }
-
-  setPhotoMap(photos) {
-    this.setState({ photoMap: photos})
+  setPhotos(photos) {
+    this.setState({ photos: photos})
   }
 
   //Effect Hooks
@@ -78,16 +65,14 @@ class App extends React.Component {
             <Route path="/" element={<Welcome/>} />
             <Route path="/photomap" element={
               <PhotoMap 
-                photoMap = {this.state.photoMap}
+                photos = {this.state.photos}
               />
             } />
             <Route path="/photolist" element={
               <PhotoList 
                 user={this.state.user}
-                photoBank = {this.state.photoBank} 
-                photoMap = {this.state.photoMap}
-                setPhotoBank = {this.setPhotoBank}
-                setPhotoMap = {this.setPhotoMap}
+                photos = {this.state.photos} 
+                setPhotos = {this.setPhotos}
               />
             } />
           </Routes>

@@ -29,105 +29,72 @@ function PhotoList(props) {
     useEffect(() => {
         // do anything with the selected/uploaded files
         if(data){
-        data.docs.map(i => console.log(i))
+            // data.docs.map(i => console.log(i))
+            const newPhotos = props.photos.concat(data.docs)
+            props.setPhotos(newPhotos)
         }
     }, [data])
 
+    // Example object returned
+    // description: ""
+    // embedUrl: "https://drive.google.com/file/d/140Cs3QL-9N61jGr8VYpoyEVmqBr0BnhX/preview?usp=drive_web"
+    // iconUrl: "https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg"
+    // id: "140Cs3QL-9N61jGr8VYpoyEVmqBr0BnhX"
+    // isShared: true
+    // lastEditedUtc: 1529061264988
+    // mimeType: "image/jpeg"
+    // name: "P1011824.jpg"
+    // parentId: "1xUmvP6r8hmK4KTruzf5M0XgLrLM2Q8CC"
+    // rotation: 0
+    // rotationDegree: 0
+    // serviceId: "docs"
+    // sizeBytes: 14017425
+    // type: "photo"
+    // url: "https://drive.google.com/file/d/140Cs3QL-9N61jGr8VYpoyEVmqBr0BnhX/view?usp=drive_web"
 
-    //Add and remove functions
-    const addAllPhoto = () => {
-        const newPhotoMap = props.photoBank.concat(props.photoMap);
-        props.setPhotoMap(newPhotoMap);
-        props.setPhotoBank([]);
-    }
-
+    //Remove functions
     const removeAllPhoto = () => {
-        const newPhotoBank = props.photoBank.concat(props.photoMap);
-        props.setPhotoBank(newPhotoBank);
-        props.setPhotoMap([]);
-    }
-
-    const addPhoto = photo => {      
-        const newPhotoMap = props.photoMap.concat(photo);
-        const newPhotoBank = props.photoBank.filter(e => e !== photo);
-        props.setPhotoMap(newPhotoMap);
-        props.setPhotoBank(newPhotoBank);
+        props.setPhotos([]);
     }
 
     const removePhoto = photo => {     
-        const newPhotoBank = props.photoBank.concat(photo);
-        const newPhotoMap = props.photoMap.filter(e => e !== photo);
-        props.setPhotoMap(newPhotoMap);
-        props.setPhotoBank(newPhotoBank);
+        const newPhotos = props.photos.filter(e => e !== photo);
+        props.setPhotos(newPhotos);
     }
 
     return (
         <div>
             {props.user ? (
                 <div id="Logged in">
-                    <Row xs={1} md={2} className="g-4">
-                        <Col id = "Photo Bank Column">
-                            <Card>
-                                <Card.Header as="h5">
-                                    <Row className="d-flex align-items-center">
-                                        <Col>Photo Bank</Col>
-                                        <Col className="d-flex justify-content-end">
-                                            <Button className="m-1" onClick={handleOpenPicker}>Import from Google</Button>
-                                            <Button className="m-1" onClick = {addAllPhoto}>Add All</Button>
-                                        </Col>
-                                    </Row>
-                                </Card.Header>
-                                <Card.Body className="p-4">
-                                    <Row xs={1} md={3} className="g-4">
-                                        {props.photoBank.map((photo,i) => (
-                                            <Col key={i}>
-                                            <Card >
-                                                <Card.Img variant="top" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/> 
-                                                <Card.Body>
-                                                <Card.Subtitle>Image Name</Card.Subtitle>
-                                                <Card.Text>
-                                                    {photo}
-                                                </Card.Text>
-                                                <Button onClick={() => addPhoto(photo)}>Add</Button>
-                                                </Card.Body>
-                                            </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col id = "Selected Photos Column">
-                            <Card>
-                                <Card.Header as="h5">
-                                    <Row className="d-flex align-items-center">
-                                        <Col>Selected Photos</Col>
-                                        <Col className="d-flex justify-content-end">
-                                            <Button variant="danger" className="m-1" onClick = {removeAllPhoto}>Remove All</Button>
-                                        </Col>
-                                    </Row>
-                                </Card.Header>
-                                <Card.Body className="p-4">
-                                    <Row xs={1} md={3} className="g-4">
-                                        {props.photoMap.map((photo,i) => (
-                                            <Col key={i}>
-                                            <Card>
-                                                <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/>
-                                                <Card.Body>
-                                                <Card.Subtitle>Image Name</Card.Subtitle>
-                                                <Card.Text>
-                                                    {photo}
-                                                </Card.Text>
-                                                <Button variant="danger" onClick={() => removePhoto(photo)}>Remove</Button>
-                                                </Card.Body>
-                                            </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
+                    <Card>
+                        <Card.Header as="h5">
+                            <Row className="d-flex align-items-center">
+                                <Col>Selected Photos</Col>
+                                <Col className="d-flex justify-content-end">
+                                    <Button className="m-1" onClick={handleOpenPicker}>Import from Google Drive</Button>
+                                    <Button variant="danger" className="m-1" onClick = {removeAllPhoto}>Remove All</Button>
+                                </Col>
+                            </Row>
+                        </Card.Header>
+                        <Card.Body className="p-4">
+                            <Row xs={1} md={4} className="g-4">
+                                {props.photos.map((photo,i) => (
+                                    <Col key={i}>
+                                    <Card>
+                                        <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo.id} loading="lazy"/>
+                                        <Card.Body>
+                                        <Card.Subtitle>{photo.name}</Card.Subtitle>
+                                        <Card.Text>
+                                            {photo.id}
+                                        </Card.Text>
+                                        <Button variant="danger" onClick={() => removePhoto(photo)}>Remove</Button>
+                                        </Card.Body>
+                                    </Card>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Card.Body>
+                    </Card>
                 </div>
             ) : (
                 <div id="guest">
