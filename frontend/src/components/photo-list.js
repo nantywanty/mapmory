@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useDrivePicker from 'react-google-drive-picker'
 import { Row, Col, Card, CardGroup, Button } from 'react-bootstrap';
 
 //Image URL: https://drive.google.com/uc?id=<file.id>
 
 function PhotoList(props) {
-
-    const logout = () => {
-        console.log("Logged out");
-        props.setUser(null);
-        localStorage.setItem('mapmoryUser', null)
+    //Google drive API
+    const [openPicker, data, authResponse] = useDrivePicker();  
+    // const customViewsArray = [new google.picker.DocsView()]; // custom view
+    const handleOpenPicker = () => {
+        openPicker({
+        clientId: "772696188730-p05amocg6bvnn2v2ur4co7k1mq2ujmte.apps.googleusercontent.com",
+        developerKey: "AIzaSyCr3-c6RzgP4mu8YbGaOcbjmNRLUC0RXvY",
+        // viewId: "DOCS_IMAGES",
+        viewMimeTypes: "application/vnd.google-apps.folder,image/bmp,image/gif,image/jpeg,image/tiff,image/png",
+        customScopes: "https://www.googleapis.com/auth/drive.metadata.readonly",
+        token: props.user.accessToken, // pass oauth access token in case you already have one
+        showUploadView: true,
+        showUploadFolders: true,
+        supportDrives: true,
+        multiselect: true,
+        setIncludeFolders: true,
+        setSelectFolderEnabled: true,
+        // customViews: customViewsArray, // custom view
+        })
     }
 
+    useEffect(() => {
+        // do anything with the selected/uploaded files
+        if(data){
+        data.docs.map(i => console.log(i))
+        }
+    }, [data])
+
+
+    //Add and remove functions
     const addAllPhoto = () => {
         const newPhotoMap = props.photoBank.concat(props.photoMap);
         props.setPhotoMap(newPhotoMap);
@@ -48,16 +72,16 @@ function PhotoList(props) {
                                     <Row className="d-flex align-items-center">
                                         <Col>Photo Bank</Col>
                                         <Col className="d-flex justify-content-end">
-                                            <Button className="m-1">Update from Drive</Button>
+                                            <Button className="m-1" onClick={handleOpenPicker}>Import from Google</Button>
                                             <Button className="m-1" onClick = {addAllPhoto}>Add All</Button>
                                         </Col>
                                     </Row>
                                 </Card.Header>
                                 <Card.Body className="p-4">
                                     <Row xs={1} md={3} className="g-4">
-                                        {props.photoBank.map((photo) => (
-                                            <Col>
-                                            <Card>
+                                        {props.photoBank.map((photo,i) => (
+                                            <Col key={i}>
+                                            <Card >
                                                 <Card.Img variant="top" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/> 
                                                 <Card.Body>
                                                 <Card.Subtitle>Image Name</Card.Subtitle>
@@ -85,8 +109,8 @@ function PhotoList(props) {
                                 </Card.Header>
                                 <Card.Body className="p-4">
                                     <Row xs={1} md={3} className="g-4">
-                                        {props.photoMap.map((photo) => (
-                                            <Col>
+                                        {props.photoMap.map((photo,i) => (
+                                            <Col key={i}>
                                             <Card>
                                                 <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo} loading="lazy"/>
                                                 <Card.Body>
