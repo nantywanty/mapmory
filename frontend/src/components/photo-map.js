@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   LoadScript,
   GoogleMap,
-  Marker
+  Marker,
 } from "@react-google-maps/api";
 
 function PhotoMap() {
@@ -40,10 +40,8 @@ function PhotoMap() {
   
     //sample photo data(end)//
   
-  
     return (
-        <LoadScript googleMapsApiKey="AIzaSyBdQqLvRqdR2Z55AVlrg9ZTeGRGm5c-36w"
-                    onload={()=>createOffsetSize()}>
+        <LoadScript googleMapsApiKey="AIzaSyBdQqLvRqdR2Z55AVlrg9ZTeGRGm5c-36w">
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
