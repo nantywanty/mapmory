@@ -12,7 +12,7 @@ import SimpleReactFooter from "simple-react-footer";
 
 function Footer() {
 
-    const description = "Created by Nant and Tomohisa as a project for the NUS IT5007 course, MAPMORY seeks to redefine how photos are stored and displayed, allowing one to relive their favourite adventures in an intuitive and visual manner any time, anywhere. Try it for free today!";
+    const description = "Created by Nant and Tomohisa as a project for the NUS IT5007 course, MAPMORY seeks to redefine how photos are stored and displayed. You can now relive their your adventures in an intuitive and visual manner any time, anywhere. Try it for free today!";
     const title = "About Mapmory";
     const columns = [
         // {
