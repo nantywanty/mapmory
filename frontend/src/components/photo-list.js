@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useDrivePicker from 'react-google-drive-picker'
 import { Row, Col, Card, CardGroup, Button } from 'react-bootstrap';
+import * as Icon from 'react-bootstrap-icons';
 
 //Image URL: https://drive.google.com/uc?id=<file.id>
 
@@ -31,9 +32,10 @@ function PhotoList(props) {
     useEffect(() => {
         // do anything with the selected/uploaded files
         if(data){
-            data.docs.map(i => console.log(i))
-            const newPhotos = props.photos.concat(data.docs)
-            props.setPhotos(newPhotos)
+            // data.docs.map(i => console.log(i))
+            const newPhotos = data.docs;
+            const nonDupPhotos = newPhotos.filter(newPhoto => !props.photos.some(photo => photo.id == newPhoto.id))
+            props.setPhotos(props.photos.concat(nonDupPhotos));
         }
     }, [data])
 
@@ -62,7 +64,7 @@ function PhotoList(props) {
     }
 
     const removePhoto = photo => {     
-        const newPhotos = props.photos.filter(e => e !== photo);
+        const newPhotos = props.photos.filter(e => e.id !== photo.id);
         props.setPhotos(newPhotos);
     }
     
@@ -76,21 +78,36 @@ function PhotoList(props) {
                         <Card.Header as="h5">
                             <Row className="d-flex align-items-center">
                                 <Col>Selected Photos</Col>
-                                <Col className="d-flex justify-content-end">
-                                    <Button className="m-1" onClick={handleOpenPicker}>Import from Google Drive</Button>
-                                    <Button variant="danger" className="m-1" onClick = {removeAllPhoto}>Remove All</Button>
+                                <Col className=" md-auto d-flex justify-content-end">
+                                    <Button className="m-1" variant="primary" onClick={handleOpenPicker}>
+                                        <Row xs="auto">
+                                            <Col className="m-0 px-1.5"><Icon.CloudArrowDown size={24} color="white"/></Col>
+                                            <Col className="m-0 px-1.5">Import from Google</Col>
+                                        </Row>
+                                    </Button>
+                                    <Button variant="danger" className="m-1" onClick = {removeAllPhoto}>
+                                    <Row xs="auto">
+                                            <Col className="m-0 px-1.5"><Icon.XLg size={23} color="white"/></Col>
+                                            <Col className="m-0 px-1.5">Remove All</Col>
+                                        </Row>
+                                    </Button>
                                 </Col>
                             </Row>
                         </Card.Header>
                         <Card.Body className="p-4">
-                            <Row xs={1} md={4} className="g-4">
+                            <Row xs={1} md={6} className="g-4">
                                 {props.photos.map((photo,i) => (
                                     <Col key={i}>
                                     <Card>
                                         <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo.id} loading="lazy"/>
                                         <Card.Body className="p-2">
-                                        <Card.Subtitle className ="mb-2">{photo.filename}</Card.Subtitle>
-                                        <Button variant="danger" onClick={() => removePhoto(photo)}>Remove</Button>
+                                        <Card.Text className ="mb-0" style={{ fontSize: "14px" }}>
+                                            <img src ="https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg" />
+                                            {" "+photo.name}
+                                        </Card.Text>
+                                        <Button className="p-0 float-end" variant="light" onClick={() => removePhoto(photo)}>
+                                            <Icon.XSquareFill size={25} color="darkgrey"/>
+                                        </Button>
                                         </Card.Body>
                                     </Card>
                                     </Col>

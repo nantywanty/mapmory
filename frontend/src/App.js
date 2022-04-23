@@ -58,7 +58,7 @@ class App extends React.Component {
         this.setPhotos = this.setPhotos.bind(this);
     }
 
-    //Functions
+    //Main functions
 
     componentDidMount() { 
         this.loadUser();
@@ -69,39 +69,91 @@ class App extends React.Component {
         //Search local storage to find logged in user
 
         const loggedInUser = JSON.parse(localStorage.getItem('mapmoryUser'));
-        if (loggedInUser) {
+        if (loggedInUser && loggedInUser.tokenObj.expires_at > Date.now()) {
             this.setUser(loggedInUser);
         }
-        
-        //Load user's photos from MongoDB
+    }
 
-        const query = `query Query($id: String!){
-            getUser(id: $id) {
-                userId 
-                photos {
-                    filename id date
-                    location { lng lat }
+    //Functions for components
+    
+    async setUser(loggedInUser) { 
+        this.setState({ user: loggedInUser})
+        
+        if(loggedInUser) {
+            //Load user's photos from MongoDB
+
+            const queryGetUser = `query Query($id: String!){
+                getUser(userId: $id) {
+                    id 
+                    name
+                    photos {
+                        name id date
+                        location { lng lat }
+                    }
                 }
+            }`;
+
+            const varGetUser = { id: loggedInUser.googleId};
+            // console.log(loggedInUser.googleId);
+            
+            const result = await graphQLFetch(queryGetUser, varGetUser);
+            // console.log(result.getUser);
+            if (result.getUser) {
+                this.setState({ photos: result.getUser.photos });
+            } else {
+                this.setState({ photos: [] });
+
+                const varAddUser = {
+                    user: {
+                        id: loggedInUser.googleId,
+                        name: loggedInUser.profileObj.name,
+                        photos: []
+                    }
+                }
+
+                const queryAddUser = `mutation AddUser($user: UserInput!){
+                    addUser(user: $user) {
+                        id 
+                    }
+                }`;
+
+                await graphQLFetch(queryAddUser, varAddUser)
+            }
+        }
+    }
+
+    async setPhotos(photos) {
+
+        const photosWithMetaData = photos.map(photo => (
+            photo.location ? (photo) : (
+                {
+                    name: photo.name,
+                    id: photo.id,
+                    date: "placeholder",
+                    location: { //placeholders
+                        lng: 103.85869733119105,
+                        lat: 1.3030695024923034
+                    }
+                }
+            )
+        ))
+
+        const varSetUser = {
+            user: {
+                id: this.state.user.googleId,
+                name: this.state.user.profileObj.name,
+                photos: photosWithMetaData,
+            }
+        }
+
+        const querySetUser = `mutation SetUser($user: UserInput!){
+            setUser(user: $user) {
+                id 
             }
         }`;
 
-        const variables = { id: loggedInUser.googleId};
-        
-        const data = await graphQLFetch(query, variables);
-        if (data) {
-            // console.log(data.getUser.photos);
-            this.setState({ photos: data.getUser.photos });
-        }
-
-    }
-
-    setUser(loggedInUser) { //Sets the current user
-        this.setState({ user: loggedInUser})
-    }
-
-    setPhotos(photos) {
-        this.setState({ photos: photos})
-        
+        await graphQLFetch(querySetUser, varSetUser)
+        this.loadUser();
     }
 
     //Render

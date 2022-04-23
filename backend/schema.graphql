@@ -6,7 +6,7 @@ type Location {
 }
 
 type Photo {
-    filename: String!
+    name: String!
     id: String!
     location: Location!
     date: String!
@@ -14,17 +14,37 @@ type Photo {
 
 type User {
     _id: ID!
-    userId: String!
-    photos: [Photo!]
+    id: String
+    name: String!
+    photos: [Photo]!
 }
+
+
+input LocationInput {
+    lng: Float!
+    lat: Float!
+}
+
+input PhotoInput {
+    name: String!
+    id: String!
+    location: LocationInput!
+    date: String!
+}
+
+input UserInput {
+    id: String!
+    name: String!
+    photos: [PhotoInput]!
+}
+
 
 ##### Top level declarations
 type Query {
-    getUser(id: String!): User
-    getAll: [User]
+    getUser(userId: String!): User
 }
 
 type Mutation {
-    addUser: User!
-    setUser: User!
+    addUser(user: UserInput!): User
+    setUser(user: UserInput!): User
 }

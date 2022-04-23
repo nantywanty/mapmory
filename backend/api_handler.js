@@ -8,11 +8,10 @@ const user = require('./user.js');
 const resolvers = {
     Query: {
         getUser: user.getUser,
-        getAll: user.getAll,
     },
     Mutation: {
-        // addUser: user.addUser,
-        // setUser: user.setUser,
+        addUser: user.addUser,
+        setUser: user.setUser,
     },
     GraphQLDate,
 };
