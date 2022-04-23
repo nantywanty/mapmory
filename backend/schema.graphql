@@ -1,0 +1,30 @@
+scalar GraphQLDate
+
+type Location {
+    lng: Float!
+    lat: Float!
+}
+
+type Photo {
+    filename: String!
+    url: String!
+    location: Location!
+    date: String!
+}
+
+type User {
+    _id: ID!
+    username: String!
+    photos: [Photo!]
+}
+
+##### Top level declarations
+type Query {
+    getUser(name: String!): User
+    getAll: [User]
+}
+
+type Mutation {
+    addUser: User!
+    setUser: User!
+}
