@@ -160,7 +160,12 @@ class App extends React.Component {
 
     render() {
         return (
-        <div className="App">
+        <div className="App" style={{
+            backgroundImage: `url("https://cdn.hovia.com/app/uploads/paris-city-street-map-illustrated-landmarks-wallpaper-mural-Plain-scaled.jpg")`,
+            // backgroundImage: `url("")`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '1500px',
+        }}>
             <Navbar bg="light" variant="light">
             <Navbar.Brand href="/">
                 <img src="mapmorylogo.png" width="200"></img>
@@ -176,7 +181,7 @@ class App extends React.Component {
             </Navbar.Collapse>
             </Navbar>
     
-            <div className="m-5">
+            <div className="m-5" >
             <Routes>
                 <Route path="/" element={<Welcome/>} />
                 <Route path="/photomap" element={
