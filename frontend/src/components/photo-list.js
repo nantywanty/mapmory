@@ -77,7 +77,7 @@ function PhotoList(props) {
                                     <Button className="m-1" variant="primary" onClick={handleOpenPicker}>
                                         <Row xs="auto">
                                             <Col className="m-0 px-1.5"><Icon.CloudArrowDown size={24} color="white"/></Col>
-                                            <Col className="m-0 px-1.5">Import from Google</Col>
+                                            <Col className="m-0 px-1.5">Import from Google Drive</Col>
                                         </Row>
                                     </Button>
                                     <Button variant="danger" className="m-1" onClick = {removeAllPhoto}>
