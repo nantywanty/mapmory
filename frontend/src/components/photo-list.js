@@ -10,27 +10,22 @@ function PhotoList(props) {
     //google-drive-picker
 
     const [openPicker, data, authResponse] = useDrivePicker();  
-    // const customViewsArray = [new google.picker.DocsView()]; // custom view
     const handleOpenPicker = () => {
         openPicker({
         clientId: "772696188730-p05amocg6bvnn2v2ur4co7k1mq2ujmte.apps.googleusercontent.com",
         developerKey: "AIzaSyCr3-c6RzgP4mu8YbGaOcbjmNRLUC0RXvY",
-        // viewId: "DOCS_IMAGES",
         viewMimeTypes: "application/vnd.google-apps.folder,image/bmp,image/gif,image/jpeg,image/tiff,image/png",
         customScopes: "https://www.googleapis.com/auth/drive.metadata.readonly",
-        token: props.user.accessToken, // pass oauth access token in case you already have one
+        token: props.user.accessToken, // pass oauth access token
         showUploadView: true,
         showUploadFolders: true,
         supportDrives: true,
         multiselect: true,
         setIncludeFolders: true,
         setSelectFolderEnabled: true,
-        // customViews: customViewsArray, // custom view
         })
     }
-
     useEffect(() => {
-        // do anything with the selected/uploaded files
         if(data){
             // data.docs.map(i => console.log(i))
             const newPhotos = data.docs;
