@@ -10,6 +10,7 @@ import Welcome from "./components/welcome.js";
 import PhotoMap from "./components/photo-map.js";
 import PhotoList from "./components/photo-list.js";
 import Login from "./components/login.js";
+import Footer from "./components/footer.js";
 
 //GraphQL code
 
@@ -166,19 +167,19 @@ class App extends React.Component {
             backgroundRepeat: 'repeat',
             backgroundSize: '1500px',
         }}>
-            <Navbar bg="light" variant="light">
-            <Navbar.Brand href="/">
-                <img src="mapmorylogo.png" width="200"></img>
-            </Navbar.Brand>
-            <Navbar.Text>
-                <Nav className="me-auto">
-                    <Nav.Link href="/photomap">Photo Map</Nav.Link>
-                    <Nav.Link href="/photolist">Photo List</Nav.Link>
-                </Nav>
-            </Navbar.Text>
-            <Navbar.Collapse className="justify-content-end">
-                <Login user={this.state.user} setUser={this.setUser}/>
-            </Navbar.Collapse>
+            <Navbar bg="white" variant="light">
+                <Navbar.Brand href="/">
+                    <img src="mapmorylogo.png" width="200"></img>
+                </Navbar.Brand>
+                <Navbar.Text>
+                    <Nav className="me-auto">
+                        <Nav.Link href="/photomap">Photo Map</Nav.Link>
+                        <Nav.Link href="/photolist">Photo List</Nav.Link>
+                    </Nav>
+                </Navbar.Text>
+                <Navbar.Collapse className="justify-content-end">
+                    <Login user={this.state.user} setUser={this.setUser}/>
+                </Navbar.Collapse>
             </Navbar>
     
             <div className="m-5" >
@@ -198,6 +199,8 @@ class App extends React.Component {
                 } />
             </Routes>
             </div>
+            <div className="pt-3"/>
+            <Footer />
         </div>
         );
     }
