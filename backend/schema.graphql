@@ -7,20 +7,20 @@ type Location {
 
 type Photo {
     filename: String!
-    url: String!
+    id: String!
     location: Location!
     date: String!
 }
 
 type User {
     _id: ID!
-    username: String!
+    userId: String!
     photos: [Photo!]
 }
 
 ##### Top level declarations
 type Query {
-    getUser(name: String!): User
+    getUser(id: String!): User
     getAll: [User]
 }
 

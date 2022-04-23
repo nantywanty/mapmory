@@ -1,13 +1,21 @@
-import express from "express"
-import cors from "cors"
-import users from "./api/users.route.js"
+require('dotenv').config({path:'./.env'});
+const express = require('express');
+const { connectToDb } = require('./db.js');
+const { installHandler } = require('./api_handler.js');
 
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+installHandler(app);
 
-app.use("/api/v1/users", users)
-app.use("*", (req, res) => res.status(404).json({error: "not found"}))
+const port = process.env.API_SERVER_PORT;
 
-export default app
+(async function start() {
+  try {
+    await connectToDb();
+    app.listen(port, () => {
+      console.log(`API server started on port ${port}`);
+    });
+  } catch (err) {
+    console.log('ERROR:', err);
+  }
+}());
