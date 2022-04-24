@@ -8,8 +8,8 @@ type Location {
 type Photo {
     name: String!
     id: String!
-    location: Location!
-    date: String!
+    location: Location
+    date: String
 }
 
 type User {
@@ -19,17 +19,22 @@ type User {
     photos: [Photo]!
 }
 
+type MetaData {
+    location: Location
+    date: String
+}
+
 
 input LocationInput {
-    lng: Float!
-    lat: Float!
+    lng: Float
+    lat: Float
 }
 
 input PhotoInput {
     name: String!
     id: String!
-    location: LocationInput!
-    date: String!
+    location: LocationInput
+    date: String
 }
 
 input UserInput {
@@ -42,6 +47,7 @@ input UserInput {
 ##### Top level declarations
 type Query {
     getUser(userId: String!): User
+    getMetaData(accessToken: String!, id: String!): MetaData
 }
 
 type Mutation {

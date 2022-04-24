@@ -4,10 +4,13 @@ const { ApolloServer } = require('apollo-server-express');
 
 const GraphQLDate = require('./graphql_date.js');
 const user = require('./user.js');
+const drive = require('./drive.js');
 
 const resolvers = {
     Query: {
         getUser: user.getUser,
+        getMetaData: drive.getMetaData,
+
     },
     Mutation: {
         addUser: user.addUser,

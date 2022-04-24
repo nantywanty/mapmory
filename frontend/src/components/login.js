@@ -12,7 +12,7 @@ function Login(props) {
     }
     const success = (response) => {
         console.log("Login success");
-        // console.log(response);
+        console.log(response);
         // console.log(response.profileObj.imageUrl);
         props.setUser(response);
         localStorage.setItem('mapmoryUser', JSON.stringify(response))

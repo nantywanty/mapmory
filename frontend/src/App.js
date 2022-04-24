@@ -57,6 +57,7 @@ class App extends React.Component {
         }
         this.setUser = this.setUser.bind(this);
         this.setPhotos = this.setPhotos.bind(this);
+        this.getMetaData = this.getMetaData.bind(this);
     }
 
     //Main functions
@@ -122,28 +123,44 @@ class App extends React.Component {
             }
         }
     }
+    
+    async getMetaData(photo) {
+        const queryGetMetaData = `query GetMetaData($accessToken: String! $id: String!) {
+            getMetaData(accessToken: $accessToken, id: $id) {
+                date location {
+                  lat lng
+                }  
+            }
+        }`;
 
-    async setPhotos(photos) {
-
-        const photosWithMetaData = photos.map(photo => (
-            photo.location ? (photo) : (
-                {
+        if (photo.location) return photo;
+            else {
+                const varGetMetaData = {
+                    accessToken: this.state.user.accessToken,
+                    id: photo.id,
+                }
+                const res = await graphQLFetch(queryGetMetaData, varGetMetaData);
+                console.log(res);
+                const photoWithMetaData = {
                     name: photo.name,
                     id: photo.id,
-                    date: "placeholder",
-                    location: { //placeholders
-                        lng: 103.85869733119105,
-                        lat: 1.3030695024923034
-                    }
+                    date: res.getMetaData.date,
+                    location: res.getMetaData.location,
                 }
-            )
-        ))
+                return photoWithMetaData;
+            }
+    }
 
+    async setPhotos(photos) {
+        // console.log("setting photo");
+        const photosWithMetaData = Promise.all(photos.map(this.getMetaData));
+        // console.log(await photosWithMetaData);
+        // console.log("setting user");
         const varSetUser = {
             user: {
                 id: this.state.user.googleId,
                 name: this.state.user.profileObj.name,
-                photos: photosWithMetaData,
+                photos: await photosWithMetaData,
             }
         }
 

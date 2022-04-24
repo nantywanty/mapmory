@@ -96,13 +96,24 @@ function PhotoList(props) {
                                     <Card>
                                         <Card.Img variant="top" className="" src={"https://drive.google.com/uc?id="+photo.id} loading="lazy"/>
                                         <Card.Body className="p-2">
-                                        <Card.Text className ="mb-0" style={{ fontSize: "14px" }}>
-                                            <img src ="https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg" />
-                                            {" "+photo.name}
-                                        </Card.Text>
-                                        <Button className="p-0 float-end" variant="light" onClick={() => removePhoto(photo)}>
-                                            <Icon.XSquareFill size={25} color="darkgrey"/>
-                                        </Button>
+                                            <Card.Text className ="mb-0" style={{ fontSize: "14px" }}>
+                                                <img src ="https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg" />
+                                                {" "+photo.name}
+                                            </Card.Text>
+                                            <Row>
+                                                <Col>
+                                                    {!photo.location &&
+                                                        <Card.Text className ="mb-0" style={{ fontSize: "14px", color: "red"}}>
+                                                        Missing metadata
+                                                        </Card.Text>
+                                                    }
+                                                </Col>
+                                                <Col xs="auto">
+                                                    <Button className="p-0 float-end" variant="light" onClick={() => removePhoto(photo)}>
+                                                        <Icon.XSquareFill size={25} color="darkgrey"/>
+                                                    </Button>
+                                                </Col>
+                                            </Row>
                                         </Card.Body>
                                     </Card>
                                     </Col>
