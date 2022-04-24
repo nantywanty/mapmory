@@ -113,11 +113,7 @@ function PhotoList(props) {
                 </div>
             ) : (
                 <div id="guest">
-                    <Card>
-                    <Card.Body className="p-4">
-                    Please log in with your Google account to start using Mapmory.
-                    </Card.Body>
-                    </Card>
+                    <Card><Card.Body className="p-4">Please log in with your Google account to start using Mapmory.</Card.Body></Card>
                 </div>
             )}
         </div>
