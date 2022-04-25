@@ -1,5 +1,5 @@
 const fs = require('fs');
-require('dotenv').config();
+// require('dotenv').config();
 const { ApolloServer } = require('apollo-server-express');
 
 const GraphQLDate = require('./graphql_date.js');
@@ -29,7 +29,8 @@ const server = new ApolloServer({
 });
 
 async function installHandler(app) {
-    const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
+    // const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
+    const enableCors = ('true') === 'true';
     console.log('CORS setting:', enableCors);
     await server.start();
     server.applyMiddleware({ app, path: '/graphql', cors: enableCors });
