@@ -8,14 +8,14 @@ import * as Icon from 'react-bootstrap-icons';
 function PhotoList(props) {
 
     //google-drive-picker
-
     const [openPicker, data, authResponse] = useDrivePicker();  
     const handleOpenPicker = () => {
+        console.log('call react-google-drive-picker with accessToken ='+props.user.accessToken);
         openPicker({
         clientId: "772696188730-p05amocg6bvnn2v2ur4co7k1mq2ujmte.apps.googleusercontent.com",
         developerKey: "AIzaSyCr3-c6RzgP4mu8YbGaOcbjmNRLUC0RXvY",
         viewMimeTypes: "application/vnd.google-apps.folder,image/bmp,image/gif,image/jpeg,image/tiff,image/png",
-        customScopes: "https://www.googleapis.com/auth/drive.metadata.readonly",
+        customScopes: "https://www.googleapis.com/auth/drive",
         token: props.user.accessToken, // pass oauth access token
         showUploadView: true,
         showUploadFolders: true,
@@ -25,6 +25,7 @@ function PhotoList(props) {
         setSelectFolderEnabled: true,
         })
     }
+    
     useEffect(() => {
         if(data){
             // data.docs.map(i => console.log(i))

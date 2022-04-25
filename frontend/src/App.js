@@ -52,8 +52,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        user: null,
-        photos: [],
+            user: null,
+            photos: [],
         }
         this.setUser = this.setUser.bind(this);
         this.setPhotos = this.setPhotos.bind(this);
@@ -73,6 +73,8 @@ class App extends React.Component {
         const loggedInUser = JSON.parse(localStorage.getItem('mapmoryUser'));
         if (loggedInUser && loggedInUser.tokenObj.expires_at > Date.now()) {
             this.setUser(loggedInUser);
+            console.log('loaded user from local storage')
+            console.log(loggedInUser)
         }
     }
 

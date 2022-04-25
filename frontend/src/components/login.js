@@ -13,9 +13,9 @@ function Login(props) {
     const success = (response) => {
         console.log("Login success");
         console.log(response);
-        // console.log(response.profileObj.imageUrl);
-        props.setUser(response);
         localStorage.setItem('mapmoryUser', JSON.stringify(response))
+        props.setUser(response);
+        console.log('user saved to local storage');
     }
     const fail = () => {
         console.log("Login failed");
@@ -85,6 +85,7 @@ function Login(props) {
                                 buttonText="Sign in with Google"
                                 onSuccess={success}
                                 onFailure={fail}
+                                scope = "https://www.googleapis.com/auth/drive"
                             />
                         </NavDropdown.Item>
                     </NavDropdown>
