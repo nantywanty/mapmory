@@ -191,9 +191,9 @@ class App extends React.Component {
                     <img src="mapmorylogo.png" width="200"></img>
                 </Navbar.Brand>
                 <Navbar.Text>
-                    <Nav className="me-auto">
-                        <Nav.Link href="/photomap">Photo Map</Nav.Link>
-                        <Nav.Link href="/photolist">Photo List</Nav.Link>
+                    <Nav variant = "pills">
+                        <Nav.Link href="/map">Photo Map</Nav.Link>
+                        <Nav.Link href="/photos">Photo Manager</Nav.Link>
                     </Nav>
                 </Navbar.Text>
                 <Navbar.Collapse className="justify-content-end">
@@ -204,12 +204,12 @@ class App extends React.Component {
             <div className="m-5" >
             <Routes>
                 <Route path="/" element={<Welcome/>} />
-                <Route path="/photomap" element={
+                <Route path="/map" element={
                 <PhotoMap 
                     photos = {this.state.photos}
                 />
                 } />
-                <Route path="/photolist" element={
+                <Route path="/photos" element={
                 <PhotoList 
                     user={this.state.user}
                     photos = {this.state.photos} 
