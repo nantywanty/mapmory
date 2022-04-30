@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Row, Col, Card, CardGroup, Button } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
-import axios from "axios";
+// import axios from "axios";
 import {
   GoogleMap,
   LoadScript,
@@ -25,8 +25,8 @@ const center = {
 };
 
 const scaledSize = {
-  height: 200,
-  width: 200
+  height: 75,
+  width: 75
 };
   
 const clusterOptions = {
@@ -114,27 +114,31 @@ const onload = (infoWindow) => {
                 </Row>
             </Card.Header>
             <Card.Body className="p-4">
-                <Row xs={5} md={5} className="g-4">
+                <Row xs={1} md={5} className="g-4">
                   <LoadScript googleMapsApiKey={apikey}>
                     <GoogleMap
                       mapContainerStyle={containerStyle}
                       center={center}
                       zoom={11}>
-                        <>
-                      {showPoly || <MarkerClusterer options={clusterOptions}>{
-                        (clusterer) =>
-                          props.photos.map((photo, i) => (
-                          <Marker
-                            key={i}
-                            icon={{ url: "https://drive.google.com/uc?id=" + photo.id, scaledSize: scaledSize }}
-                            position={photo.location}
-                            clusterer={clusterer}
-                            />
+                      {showPoly || <MarkerClusterer options={clusterOptions}>
+                        {(clusterer) =>
+                          props.photos.map((photo) => (
+                            <>
+                              <Marker
+                                position={photo.location}
+                                clusterer={clusterer}
+                              />
+                              <InfoWindow onload={onload} position={photo.location}>
+                                <div style={{backgroundColor: 'black'}}>
+                                  <img src={"https://drive.google.com/uc?id=" + photo.id} style={scaledSize} />
+                                  {/* <p>{photo.date}</p> */}
+                                </div>
+                              </InfoWindow>
+                            </>
                           ))
                         }
                       </MarkerClusterer>}
-                      {showPoly && <Polyline path={path} options={polylineOptions} />}            
-                        </>
+                      {showPoly && <Polyline path={path} options={polylineOptions} />} 
                     </GoogleMap>
                   </LoadScript>   
                 </Row>
