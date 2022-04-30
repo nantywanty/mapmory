@@ -33,20 +33,30 @@ const PhotoMap = (props)=>{
   const [showPoly, setshowPoly] = useState(false)
   const [photoSize, setPhotoSize] = useState({height:50})
   
-  const photos = props.photos;
+  let photos = props.photos;
+  // console.log(photos)
+
+  /**remove photos that don't have location data */
+  photos = photos.filter(photo =>!(photo.location===null))
+
+  /**sort photos by date */
+  photos = photos.sort((a, b)=> {
+    if (a.date < b.date) {
+      return -1;
+    }
+    if (a.date > b.date) {
+      return 1;
+    }
+    return 0;
+  });
   // console.log(photos)
 
   const onclickButton = () => {
     setshowPoly(!showPoly);
   };
 
-
-  let path = props.photos.map((originlocation) => {
-    if(!(originlocation.location==null)){
-      return originlocation.location}
-  });
-
-  path = path.filter(item =>!(item===undefined))
+  /**generate a list of location for showing Polyline */
+  const path = photos.map((photo) => photo.location);
 
   // console.log(path)
 
@@ -68,8 +78,8 @@ const PhotoMap = (props)=>{
 
   function handleZoomChange() {
     setPhotoSize({height:10+10*this.zoom})
-    console.log("zoom level:"+this.zoom)
-    console.log(photoSize)
+    // console.log("zoom level:"+this.zoom)
+    // console.log(photoSize)
   };
 
   return (
@@ -100,7 +110,7 @@ const PhotoMap = (props)=>{
               >
                 {showPoly || <MarkerClusterer options={clusterOptions}>
                   {(clusterer) =>
-                    props.photos.map((photo,i) => (
+                    photos.map((photo,i) => (
                       <InfoWindow key={i} position={photo.location}>
                         <img src={"https://drive.google.com/uc?id=" + photo.id} style={photoSize} />
                       </InfoWindow>
