@@ -77,7 +77,7 @@ const PhotoMap = (props)=>{
   };
 
   function handleZoomChange() {
-    setPhotoSize({height:10+10*this.zoom})
+    setPhotoSize({height:10+2*this.zoom**2})
     // console.log("zoom level:"+this.zoom)
     // console.log(photoSize)
   };
